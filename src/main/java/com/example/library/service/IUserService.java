@@ -1,15 +1,21 @@
 package com.example.library.service;
 
+import java.util.List;
+
 import com.example.library.domain.User;
 
 public interface IUserService {
+
+	User getUserById(Long id);
 	
-	User getUserById(long id);
-
-	User getUserByUsername(String username);
-
+	User getUserByEmail(String email);
+	
 	User addUser(User user);
+	
+	User updateUser(User user);
 
-	Iterable<User> getUsers();
+	List<User> getUsers();
+	
+	void deleteUser(User user);
 
 }

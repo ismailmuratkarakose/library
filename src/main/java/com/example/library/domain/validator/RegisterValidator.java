@@ -28,7 +28,7 @@ public class RegisterValidator implements Validator {
 	}
 
 	private void validateUsername(Errors errors, User form) {
-		if (userService.getUserByUsername(form.getUsername()) != null) {
+		if (userService.getUserByEmail(form.getEmail()) != null) {
 			errors.reject("username.exists", "User with this username already exists");
 		}
 	}
