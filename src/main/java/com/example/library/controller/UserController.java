@@ -1,25 +1,97 @@
 package com.example.library.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.library.domain.Book;
+import com.example.library.domain.BookReservation;
+import com.example.library.domain.ReservationStatus;
 import com.example.library.domain.User;
 import com.example.library.domain.UserDTO;
+import com.example.library.domain.UserType;
+import com.example.library.service.BookReservationService;
+import com.example.library.service.BookService;
 import com.example.library.service.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	BookService bookService;
+
+	@Autowired
+	BookReservationService bookReservationService;
+
+	public void contextLoads() {
+		User user = new User();
+		user.setEmail("karakose.ismailmurat@gmail.com");
+		user.setPassword("Karakose.05");
+		user.setName("Ismail Murat");
+		user.setLastName("Karakose");
+		user.setType(UserType.ADMIN);
+		user.setPhone("05069452424");
+		userService.addUser(user);
+
+		user = new User();
+		user.setEmail("stu.user@gmail.com");
+		user.setPassword("student");
+		user.setName("Ismail Murat");
+		user.setLastName("Karakose");
+		user.setType(UserType.STUDENT);
+		user.setPhone("05069452424");
+		userService.addUser(user);
+
+		Book book = new Book();
+		book.setName("Refactoring");
+		book.setAuthor("Martin Fowler");
+		book.setPublisher("Amazon");
+		book.setQuantity(100);
+		bookService.addBook(book);
+
+		book = new Book();
+		book.setName("TDD");
+		book.setAuthor("Kent Beck");
+		book.setPublisher("Amazon");
+		book.setQuantity(100);
+		bookService.addBook(book);
+
+		BookReservation bookReservation = new BookReservation();
+		bookReservation.setUser(userService.getUserById(2l));
+		bookReservation.setBook(bookService.getBookById(1l));
+		bookReservation.setBorrowDate(new Date());
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(bookReservation.getBorrowDate());
+		calendar.add(Calendar.DAY_OF_YEAR, 7);
+		bookReservation.setReturnDate(calendar.getTime());
+		bookReservation.setStatus(ReservationStatus.BORREWED);
+		bookReservationService.addBookReservation(bookReservation);
+		
+		bookReservation = new BookReservation();
+		bookReservation.setUser(userService.getUserById(2l));
+		bookReservation.setBook(bookService.getBookById(1l));
+		bookReservation.setBorrowDate(new Date());
+		calendar.setTime(bookReservation.getBorrowDate());
+		calendar.add(Calendar.DAY_OF_YEAR, 7);
+		bookReservation.setReturnDate(calendar.getTime());
+		bookReservation.setStatus(ReservationStatus.BORREWED);
+		bookReservationService.addBookReservation(bookReservation);
+	}
+
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public List<User> getAll() {
+		//contextLoads();
 		return userService.getUsers();
 	}
 
@@ -61,6 +133,15 @@ public class UserController {
 
 	@RequestMapping(value = "/get", method = RequestMethod.POST)
 	public User get(@RequestBody UserDTO request) {
-			return userService.getUserByEmail(request.getEmail());
+		return userService.getUserByEmail(request.getEmail());
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public User login(@RequestBody UserDTO request) {
+		User temp= userService.getUserByEmail(request.getEmail());
+		if(!temp.getPassword().equals(request.getPassword())){
+			return null;
+		}
+		return temp;
 	}
 }

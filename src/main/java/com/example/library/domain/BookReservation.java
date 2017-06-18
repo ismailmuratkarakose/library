@@ -32,7 +32,7 @@ public class BookReservation {
 	@Column(name = "return_date", nullable = false)
 	private Date returnDate;
 
-	@Column(name = "status", columnDefinition = "varchar(32) default 'BORROWED'")
+	@Column(name = "status")
 	@Enumerated(value = EnumType.STRING)
 	private ReservationStatus status;
 

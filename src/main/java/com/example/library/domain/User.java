@@ -30,7 +30,6 @@ public class User {
 	private Long id;
 
 	@NotEmpty
-	@Size(min = 3, max = 20)
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
@@ -47,13 +46,10 @@ public class User {
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
-	@NotEmpty
-	@Size(min = 11, max = 11)
-	@Column(name = "phone", nullable = false)
+	@Column(name = "phone")
 	private String phone;
 	
-	@NotEmpty
-	@Column(name = "type", nullable = false)
+	@Column(name = "userType")
 	@Enumerated(value = EnumType.STRING)
 	private UserType type;
 

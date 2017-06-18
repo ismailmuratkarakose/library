@@ -33,7 +33,6 @@ public class Book {
 	@Column(name = "publisher", nullable = false)
 	private String publisher;
 
-	@NotEmpty
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 
@@ -66,10 +65,6 @@ public class Book {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
