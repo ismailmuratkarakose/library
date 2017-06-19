@@ -1,7 +1,5 @@
 package com.example.library.controller;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +39,23 @@ public class BookReservationController {
 		BookReservation bookReservation = new BookReservation();
 		bookReservation.setBook(bookService.getBookById(request.getBookId()));
 		bookReservation.setUser(userService.getUserById(request.getUserId()));
-		bookReservation.setBorrowDate(new Date());
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(bookReservation.getBorrowDate());
-		calendar.add(Calendar.DAY_OF_YEAR, 7);
-		bookReservation.setReturnDate(calendar.getTime());
+		bookReservation.setBorrowDate(request.getBorrowDate());
+		bookReservation.setReturnDate(request.getReturnDate());
+		bookReservation.setStatus(request.getStatus());
+		bookReservation=bookReservationService.addBookReservation(bookReservation);
+		return bookReservation;
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public BookReservation update(@RequestBody BookReservationDTO request) {
+		BookReservation bookReservation = new BookReservation();
+		bookReservation.setId(request.getId());
+		bookReservation.setBook(bookService.getBookById(request.getBookId()));
+		bookReservation.setUser(userService.getUserById(request.getUserId()));
+		bookReservation.setBorrowDate(request.getBorrowDate());
+		bookReservation.setReturnDate(request.getReturnDate());
+		bookReservation.setStatus(request.getStatus());
+		bookReservation=bookReservationService.addBookReservation(bookReservation);
 		return bookReservation;
 	}
 
