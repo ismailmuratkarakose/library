@@ -1,7 +1,7 @@
 package com.example.library.domain.validator;
 
 import com.example.library.domain.User;
-import com.example.library.service.UserService;
+import com.example.library.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -9,10 +9,10 @@ import org.springframework.validation.Validator;
 
 @Component
 public class RegisterValidator implements Validator {
-	private final UserService userService;
+	private final UserServiceImpl userService;
 
 	@Autowired
-	public RegisterValidator(UserService userService) {
+	public RegisterValidator(UserServiceImpl userService) {
 		this.userService = userService;
 	}
 

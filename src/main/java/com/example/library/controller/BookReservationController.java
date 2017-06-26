@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.library.domain.BookReservation;
 import com.example.library.domain.BookReservationDTO;
-import com.example.library.service.BookReservationService;
-import com.example.library.service.BookService;
-import com.example.library.service.UserService;
+import com.example.library.service.BookReservationServiceImpl;
+import com.example.library.service.BookServiceImpl;
+import com.example.library.service.UserServiceImpl;
 
 @CrossOrigin
 @RestController
@@ -21,13 +21,13 @@ import com.example.library.service.UserService;
 public class BookReservationController {
 
 	@Autowired
-	BookReservationService bookReservationService;
+	BookReservationServiceImpl bookReservationService;
 
 	@Autowired
-	BookService bookService;
+	BookServiceImpl bookService;
 
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public List<BookReservation> getAll() {

@@ -17,22 +17,22 @@ import com.example.library.domain.ReservationStatus;
 import com.example.library.domain.User;
 import com.example.library.domain.UserDTO;
 import com.example.library.domain.UserType;
-import com.example.library.service.BookReservationService;
-import com.example.library.service.BookService;
-import com.example.library.service.UserService;
+import com.example.library.service.BookReservationServiceImpl;
+import com.example.library.service.BookServiceImpl;
+import com.example.library.service.UserServiceImpl;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
 	@Autowired
-	BookService bookService;
+	BookServiceImpl bookService;
 
 	@Autowired
-	BookReservationService bookReservationService;
+	BookReservationServiceImpl bookReservationService;
 
 	public void contextLoads() {
 		User user = new User();
@@ -50,6 +50,15 @@ public class UserController {
 		user.setName("Ismail Murat");
 		user.setLastName("Karakose");
 		user.setType(UserType.STUDENT);
+		user.setPhone("05069452424");
+		userService.addUser(user);
+		
+		user = new User();
+		user.setEmail("lib.user@gmail.com");
+		user.setPassword("librarian");
+		user.setName("Ismail Murat");
+		user.setLastName("Karakose");
+		user.setType(UserType.LIBRARIAN);
 		user.setPhone("05069452424");
 		userService.addUser(user);
 
@@ -75,7 +84,7 @@ public class UserController {
 		calendar.setTime(bookReservation.getBorrowDate());
 		calendar.add(Calendar.DAY_OF_YEAR, 7);
 		bookReservation.setReturnDate(calendar.getTime());
-		bookReservation.setStatus(ReservationStatus.BORREWED);
+		bookReservation.setStatus(ReservationStatus.BORROWED);
 		bookReservationService.addBookReservation(bookReservation);
 		
 		bookReservation = new BookReservation();
@@ -85,13 +94,12 @@ public class UserController {
 		calendar.setTime(bookReservation.getBorrowDate());
 		calendar.add(Calendar.DAY_OF_YEAR, 7);
 		bookReservation.setReturnDate(calendar.getTime());
-		bookReservation.setStatus(ReservationStatus.BORREWED);
+		bookReservation.setStatus(ReservationStatus.BORROWED);
 		bookReservationService.addBookReservation(bookReservation);
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public List<User> getAll() {
-		//contextLoads();
 		return userService.getUsers();
 	}
 
@@ -138,6 +146,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public User login(@RequestBody UserDTO request) {
+		contextLoads();
 		User temp= userService.getUserByEmail(request.getEmail());
 		if(!temp.getPassword().equals(request.getPassword())){
 			return null;

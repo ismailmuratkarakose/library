@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.library.domain.Book;
 import com.example.library.domain.BookDTO;
-import com.example.library.service.BookService;
+import com.example.library.service.BookServiceImpl;
 
 @CrossOrigin
 @RestController
@@ -19,7 +19,7 @@ import com.example.library.service.BookService;
 public class BookController {
 
 	@Autowired
-	BookService bookService;
+	BookServiceImpl bookService;
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public List<Book> getAll() {

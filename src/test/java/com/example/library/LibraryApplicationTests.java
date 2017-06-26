@@ -14,22 +14,22 @@ import com.example.library.domain.BookReservation;
 import com.example.library.domain.ReservationStatus;
 import com.example.library.domain.User;
 import com.example.library.domain.UserType;
-import com.example.library.service.BookReservationService;
-import com.example.library.service.BookService;
-import com.example.library.service.UserService;
+import com.example.library.service.BookReservationServiceImpl;
+import com.example.library.service.BookServiceImpl;
+import com.example.library.service.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LibraryApplicationTests {
 
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
 	@Autowired
-	BookService bookService;
+	BookServiceImpl bookService;
 
 	@Autowired
-	BookReservationService bookReservationService;
+	BookReservationServiceImpl bookReservationService;
 
 	@Test
 	public void contextLoads() {
@@ -73,7 +73,7 @@ public class LibraryApplicationTests {
 		calendar.setTime(bookReservation.getBorrowDate());
 		calendar.add(Calendar.DAY_OF_YEAR, 7);
 		bookReservation.setReturnDate(calendar.getTime());
-		bookReservation.setStatus(ReservationStatus.BORREWED);
+		bookReservation.setStatus(ReservationStatus.BORROWED);
 		bookReservationService.addBookReservation(bookReservation);
 	}
 
